@@ -12,6 +12,11 @@ import cors from 'cors'
  */ 
 const app = express()
 
+// allow cross-origin requests in dev mode
+if (process.env.APP_ENV !== 'production') {
+    app.use(cors());
+}
+
 // serve the dist folder containing bundles
 app.use('/bin', express.static('dist'))
 
@@ -20,11 +25,6 @@ app.use('/public', express.static('public'))
 
 // register api routes
 app.use('/api', routes)
-
-// allow cross-origin requests in dev mode
-if (process.env.APP_ENV !== 'production') {
-    app.use(cors());
-}
 
 /**
  * Serves the main html page on any route except

@@ -65,9 +65,9 @@ module.exports = {
   },
 
   plugins: [
-    
+
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: resolve(__dirname, '..', 'app', 'index.html'),
       inject: 'body',
     }),
 

@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -9,17 +9,14 @@ import * as UserActions from 'actions/user-actions'
 class App extends Component {
 
   static propTypes = {
-
-  }
-
-  componentDidMount() {
-
+    children: PropTypes.element.isRequired
   }
 
   render() {
-    return (
-      <div>
-        {this.props.children}
+    const props = this.props
+    return(
+      <div className="page-container">
+        {React.cloneElement({...props}.children, {...props})}
       </div>
     )
   }
@@ -29,13 +26,15 @@ class App extends Component {
 function mapStateToProps(state) {
   return state
 }
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     UserActions,
     dispatch
   )
 }
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App)

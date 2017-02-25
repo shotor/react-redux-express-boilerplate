@@ -2,7 +2,11 @@ import React, { PropTypes, Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+require('expose-loader?$!expose-loader?jQuery!jquery')
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
 import 'styles/app.less'
+
 
 import * as UserActions from 'actions/user-actions'
 

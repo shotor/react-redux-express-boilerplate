@@ -92,12 +92,25 @@ module.exports = {
           fallbackLoader: "style-loader",
           loader: ["css-loader", "less-loader"]
         })
-      }
+      },
+
+      { test: /\.(png|gif|jpg)$/, loader: 'url-loader', options: { limit: 8192 } },
+      { test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff2' } },
+      { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff' } },
+      // load these fonts normally, as files:
+      { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
 
     ],
   },
 
   plugins: [
+
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery',
+      'window.jQuery': 'jquery', // this doesn't expose jQuery property for window, but replaces calls to it in every module
+
+    }),
 
     new webpack.DefinePlugin({
       'process.env': {

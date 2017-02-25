@@ -62,7 +62,9 @@ module.exports = {
     contentBase: dist_folder,
 
     // match the output `publicPath`
-    publicPath: '/'
+    publicPath: '/',
+
+    historyApiFallback: true
 
   },
 

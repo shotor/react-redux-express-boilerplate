@@ -16,7 +16,7 @@ const Root = ({ store, history }) => {
     <Provider store={store}>
       <Router history={history} routes={routes} />
     </Provider>
-  );
+  )
 
   if (process.env.NODE_ENV !== 'production') {
 
@@ -26,15 +26,15 @@ const Root = ({ store, history }) => {
           <Router history={history} routes={routes} />
         </div>
       </Provider>
-    );
+    )
   }
 
   return ComponentEl;
-};
+}
 
 Root.propTypes = {
   history: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired
-};
+}
 
 export default Root;

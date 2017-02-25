@@ -16,7 +16,14 @@
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^3.0.2",
+    "react-router-redux": "^4.0.8",
+    "react-router-scroll": "^0.4.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "whatwg-fetch": "^2.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -27,12 +34,16 @@
     "babel-preset-stage-0": "^6.22.0",
     "concurrently": "^3.3.0",
     "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^2.0.0",
     "html-webpack-plugin": "^2.28.0",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
     "nodemon": "^1.11.0",
     "postcss-loader": "^0.9.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.4.1",
+    "webpack-notifier": "^1.5.0"
   }
 }

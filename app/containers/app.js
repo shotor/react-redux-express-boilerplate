@@ -7,6 +7,8 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'styles/app.less'
 
+import NavBar from 'components/nav-bar/nav-bar'
+import Footer from 'components/footer/footer'
 
 import * as UserActions from 'actions/user-actions'
 
@@ -20,7 +22,9 @@ class App extends Component {
     const props = this.props
     return(
       <div className="page-container">
-        {React.cloneElement({...props}.children, {...props})}
+        <NavBar />
+        {React.cloneElement({...props}.children, {...props})}          
+        <Footer />
       </div>
     )
   }

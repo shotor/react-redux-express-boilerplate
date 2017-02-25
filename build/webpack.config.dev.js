@@ -109,7 +109,6 @@ module.exports = {
       '$': 'jquery',
       'jQuery': 'jquery',
       'window.jQuery': 'jquery', // this doesn't expose jQuery property for window, but replaces calls to it in every module
-
     }),
 
     new webpack.DefinePlugin({

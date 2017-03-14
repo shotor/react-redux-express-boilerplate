@@ -10,7 +10,9 @@
     "build:dev": "node_modules/.bin/webpack --config build/webpack.config.dev.js",
     "build:prod": "node_modules/.bin/webpack --config build/webpack.config.prod.js",
     "electron:start:dev": "node_modules/.bin/concurrent --kill-others \"npm run app:dev\" \"npm run electron:dev\"",
+    "electron:start:prod": "npm run build:prod && npm run electron",
     "electron:dev": "npm run build:dev && npm run electron",
+    "electron:package": "",
     "electron": "node_modules/.bin/electron electron.js"
   },
   "author": "shotor",

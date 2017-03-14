@@ -5,9 +5,7 @@ import { Link } from 'react-router'
 
 import './nav-bar.less'
 
-import * as UserActions from 'actions/user-actions'
-
-class NavBar extends Component {
+export default class NavBar extends Component {
 
     render() {
         return (
@@ -28,13 +26,8 @@ class NavBar extends Component {
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <li> 
-                                <Link to={`/politics`}>
-                                    Politics
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to={`/opinion`}>
-                                    Opinion
+                                <Link to={`/different`}>
+                                    Different Page
                                 </Link>
                             </li>
                         </ul>
@@ -45,19 +38,3 @@ class NavBar extends Component {
     }
 
 }
-
-function mapStateToProps(state) {
-    return state
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators(
-        UserActions,
-        dispatch
-    )
-}
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(NavBar)

@@ -13,15 +13,13 @@ import NotFound from 'components/not-found'
 
 // view components
 import HomeContainer from 'containers/home'
-import PoliticsContainer from 'containers/politics/politics-container'
-import OpinionContainer from 'containers/opinion/opinion-container'
+import DifferentPageContainer from 'containers/different-page/different-page-container'
 
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={HomeContainer}/>
     <Route path="about" component={About}/>
-    <Route path="politics" component={PoliticsContainer} />
-    <Route path="opinion" component={OpinionContainer} />
+    <Route path="different" component={DifferentPageContainer} />
     <Route path="*" component={NotFound}/>
   </Route>
 )

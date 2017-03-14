@@ -8,9 +8,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'styles/app.less'
 
 import NavBar from 'components/nav-bar/nav-bar'
-import Footer from 'components/footer/footer'
 
-import * as UserActions from 'actions/user-actions'
+import * as EntityActions from 'actions/entity-actions'
 
 class App extends Component {
 
@@ -24,7 +23,6 @@ class App extends Component {
       <div className="page-container">
         <NavBar />
         {React.cloneElement({...props}.children, {...props})}          
-        <Footer />
       </div>
     )
   }
@@ -37,7 +35,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    UserActions,
+    EntityActions,
     dispatch
   )
 }

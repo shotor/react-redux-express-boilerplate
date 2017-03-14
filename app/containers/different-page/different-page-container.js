@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-class PoliticsContainer extends Component {
+import * as EntityActions from 'actions/entity-actions'
+
+class DifferentPageContainer extends Component {
 
     static propTypes = {
     }
@@ -12,7 +14,7 @@ class PoliticsContainer extends Component {
         return (
             <div>
 
-                Politics
+                Opinion
 
             </div>
         )
@@ -26,7 +28,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(
-        {},
+        EntityActions,
         dispatch
     )
 }
@@ -34,4 +36,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(PoliticsContainer)
+)(DifferentPageContainer)

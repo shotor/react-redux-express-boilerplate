@@ -26,13 +26,13 @@ module.exports = {
     // the entry point of our app
   ],
   output: {
-    filename: 'bundle.js',
     // the output bundle
+    filename: 'bundle.js',
 
     path: dist_folder,
 
-    publicPath: '/'
     // necessary for HMR to know where to load the hot update chunks
+    publicPath: 'http://localhost:3001/'
   },
 
   resolve: {
@@ -62,7 +62,7 @@ module.exports = {
     contentBase: dist_folder,
 
     // match the output `publicPath`
-    publicPath: '/',
+    publicPath: 'http://localhost:3001/',
 
     historyApiFallback: true
 
@@ -91,8 +91,8 @@ module.exports = {
       {
         test: /\.less$/,
         use: ExtractTextPlugin.extract({
-          fallbackLoader: "style-loader",
-          loader: ["css-loader", "less-loader"]
+          fallback: "style-loader",
+          use: ["css-loader", "less-loader"]
         })
       },
 

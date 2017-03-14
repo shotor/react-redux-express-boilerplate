@@ -33,7 +33,6 @@ module.exports = {
 
     // necessary for HMR to know where to load the hot update chunks
     publicPath: 'http://localhost:3001/'
-    //publicPath: '/'
   },
 
   resolve: {
@@ -64,7 +63,6 @@ module.exports = {
 
     // match the output `publicPath`
     publicPath: 'http://localhost:3001/',
-    //publicPath: '/',
 
     historyApiFallback: true
 

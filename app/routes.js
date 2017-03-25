@@ -13,13 +13,13 @@ import NotFound from 'components/not-found'
 
 // view components
 import HomeContainer from 'containers/home'
-import DifferentPageContainer from 'containers/different-page/different-page-container'
+import Iframe from 'containers/iframe/iframe'
 
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={HomeContainer}/>
     <Route path="about" component={About}/>
-    <Route path="different" component={DifferentPageContainer} />
+    <Route path="iframe" component={Iframe}/>
     <Route path="*" component={NotFound}/>
   </Route>
 )

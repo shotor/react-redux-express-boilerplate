@@ -3,11 +3,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 require('expose-loader?$!expose-loader?jQuery!jquery')
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'styles/app.less'
-
-import NavBar from 'components/nav-bar/nav-bar'
+// import 'bootstrap'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'styles/app.less'
+import 'styles/application.sass'
 
 import * as EntityActions from 'actions/entity-actions'
 
@@ -21,7 +20,6 @@ class App extends Component {
     const props = this.props
     return(
       <div className="page-container">
-        <NavBar />
         {React.cloneElement({...props}.children, {...props})}          
       </div>
     )

@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import './nav-bar.less'
-
 export default class NavBar extends Component {
 
     render() {

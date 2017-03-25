@@ -12,7 +12,7 @@ const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)
 
 // Get the DOM Element that will host our React application
-const rootEl = document.getElementById('root')
+const rootEl = document.getElementById('app')
 
 // Render the React application to the DOM
 render(

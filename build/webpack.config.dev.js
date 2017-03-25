@@ -89,10 +89,10 @@ module.exports = {
       },
 
       {
-        test: /\.less$/,
+        test: /\.scss$|\.sass$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: ["css-loader", "less-loader"]
+          use: ["css-loader", "sass-loader"]
         })
       },
 

@@ -47,7 +47,7 @@ class Home extends Component {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    maxLength="30"
+                                    maxLength="37"
                                     style={{ width: '100%' }}
                                     value={this.props.weather.title}
                                     onChange={(e) => {
@@ -102,7 +102,7 @@ class Home extends Component {
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe width="330" height="372" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
+                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
                                 </code>
                             </pre>
 
@@ -143,7 +143,7 @@ class Home extends Component {
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe width="330" height="372" src="http://localhost:3001/iframe/?t=${widget.title}&u=${widget.units}&w=${widget.showWind}></iframe>`}
+                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${widget.title}&u=${widget.units}&w=${widget.showWind}></iframe>`}
                                 </code>
                             </pre>
 

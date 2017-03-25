@@ -15,7 +15,7 @@ class Iframe extends Component {
     componentDidMount() {
         const geo = navigator.geolocation
         const position = geo.getCurrentPosition(pos => {
-            console.log(pos)
+            this.props.updatePosition(pos.coords.latitude, pos.coords.longitude)
         })
     }
 
@@ -26,10 +26,17 @@ class Iframe extends Component {
         const { entities: { documents } } = this.props
 
         return (
-            <div className="container">
+            <div className="container-fluid">
 
-                <WeatherWidget />
-
+                <div className="row">
+                    <div className="col-xs-12">
+                        <WeatherWidget
+                            lat={this.props.weather.lat || 0}
+                            lng={this.props.weather.lng || 0}
+                        />
+                    </div>
+                </div>
+       
             </div>
         )
     }

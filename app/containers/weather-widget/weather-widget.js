@@ -26,26 +26,17 @@ class WeatherWidget extends Component {
   }
 
   componentDidMount() {
-    let city = this.props.weather.city;   // default
 
-    // pass location by param
+    let city = this.props.weather.city;
 
     const localParam = getURLParam(window.location, 'l');
     if (localParam) {
       city = localParam;
-      if (window.localStorage) window.localStorage.setItem('localtion', localParam);
-    } else if (window.localStorage && window.localStorage.getItem('localtion')) {
-      city = window.localStorage.getItem('localtion');
-    }
+    } 
 
     // pass units of temperature by param
-    const unitsParam = getURLParam(window.location, 'u').toUpperCase();
-    if (unitsParam) {
-      this.setState({ units: unitsParam });
-      if (window.localStorage) window.localStorage.setItem('units', unitsParam);
-    } else {
-      this.setState({ units: this.props.weather.units })
-    }
+    
+    //this.setState({ units: unitsParam });
 
     // interval
     this.props.fetchData(city);
@@ -64,35 +55,41 @@ class WeatherWidget extends Component {
 
   render() {
 
+    const unitsParam = getURLParam(window.location, 'u').toUpperCase();
+
+    const units = unitsParam || this.props.weather.units
+
     const { icon } = this.props.weather
 
     let deg = this.props.weather.degree
     let speed = this.props.weather.windSpeed
     let speedUnits = 'mp/h'
 
-    if (this.props.weather.units === 'C') {
+    if (units === 'C') {
       deg = ((deg - 32) * 5 / 9).toFixed(2)
       speed = (speed * 1.609344).toFixed(2)
       speedUnits = 'km/h'
     }
 
+    const localParam = getURLParam(window.location, 'l');
+
     return (
       <div className="card">
         <div className="row">
-          <div className="col-md-12 weather-title">
+          <div className="col-xs-12 weather-title">
             <h4>{this.props.weather.title}</h4>
           </div>
         </div>
         <div className="row">
           <div
-            className="col-md-2 col-md-offset-2" style={{ textAlign: 'center' }}>
+            className="col-xs-2 col-xs-offset-2" style={{ textAlign: 'center' }}>
             <img src={`http://openweathermap.org/img/w/${icon}.png`} />
           </div>
-          <div className="col-md-8">
+          <div className="col-xs-8">
             <h4>{this.props.weather.city}</h4>
             <div>
               
-              {deg}°{this.props.weather.units}
+              {deg}°{units}
               
               &nbsp;
 

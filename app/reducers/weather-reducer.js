@@ -32,45 +32,24 @@ export default function weather_reducer(
   action) {
 
   switch (action.type) {
+
     case FETCH_REQUEST:
       return state;
 
     case FETCH_SUCCESS:
 
       const {
-        city: { name: city },
-        list: forecast,
+        city: { name },
+        list: [{ deg, speed, weather: [{ icon }] }]
       } = action.json
 
-      const { 
-        dt: date, 
-        temp: { min: low, max: high, day },
-        weather: [{ 
-          id: code,
-          description: text
-        }],
-        deg: temp,
-        humidity,
-        speed        
-      } = forecast[0];
-
-      const afterFetch = {
+      return {
         ...state,
-        local: city,
-        city,
-        date: date,
-        humidity: humidity,
+        icon,
+        city: name,
         windSpeed: speed,
-        day: day,
-        high: high,
-        low: low,
-        type: text[0].toUpperCase() + text.slice(1),
-        code: code,
-        degree: temp,
-        forecast: forecast
-      };
-
-      return afterFetch
+        degree: deg,
+      }
 
     case UPDATE_POSITION:
       return {
@@ -84,9 +63,9 @@ export default function weather_reducer(
         ...state,
         title: action.title
       }
-      break
 
     case TOGGLE_UNITS:
+
       return {
         ...state,
         units: state.units === 'F' ? 'C' : 'F'

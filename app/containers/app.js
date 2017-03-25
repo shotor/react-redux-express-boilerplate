@@ -3,10 +3,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 require('expose-loader?$!expose-loader?jQuery!jquery')
-// import 'bootstrap'
-// import 'bootstrap/dist/css/bootstrap.css'
-// import 'styles/app.less'
-import 'styles/application.sass'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'styles/app.less'
 
 class App extends Component {
 

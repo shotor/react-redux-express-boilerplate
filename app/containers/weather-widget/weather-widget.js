@@ -17,7 +17,9 @@ class WeatherWidget extends Component {
 
   static propTypes = {
     weather: PropTypes.object.isRequired,
-    fetchData: PropTypes.func.isRequired
+    fetchData: PropTypes.func.isRequired,
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired
   }
 
   constructor() {
@@ -85,17 +87,6 @@ class WeatherWidget extends Component {
     clearInterval(this.timer);
   }
 
-  update(params) {
-
-    const { units, title } = this.state
-    const location = getURLParam(window.location, 'l')
-
-    //const query = [['u' , units], ['t', title], ['l', location]]
-    //.reduce((xs, x) => `${xs}${x[0]}=${x[1]}&`, '?')
-
-    //browserHistory.push(`/${query.slice(0, query.length)}`)
-  }
-
   onClickLocationDetail(e) {
     if (this.props.weather.showWind) {
       const currentTarget = e.currentTarget;
@@ -104,66 +95,98 @@ class WeatherWidget extends Component {
     }
   }
 
-  onClickTemperatureUnit(e) {
-    // const target = e.currentTarget;
-    // const units = (target.innerHTML === 'F') ? 'C' : 'F';
-    // this.setState({ units: units });
-    // this.update()
+  formatDate(date) {
+    const monthNames = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "June", "July",
+      "Aug", "Sept", "Oct",
+      "Nov", "Dec"
+    ]
 
-    // if (window.localStorage) window.localStorage.setItem('units', units);
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
   }
 
   render() {
-    const mapping = [
-      <Windy />,               //  0. tornado
-      <SunShower />,           //  1. tropical storm
-      <Windy />,               //  2. hurricane
-      <ThunderStorm />,        //  3. severe thunderstorms
-      <ThunderStorm />,        //  4. thunderstorms
-      <Rainy />,               //  5. mixed rain and snow
-      <Rainy />,               //  6. mixed rain and sleet
-      <Flurries />,            //  7. mixed snow and sleet
-      <Rainy />,               //  8. freezing drizzle
-      <Rainy />,               //  9. drizzle
-      <Rainy />,               // 10. freezing rain
-      <Rainy />,               // 11. showers
-      <Rainy />,               // 12. showers
-      <Flurries />,            // 13. snow flurries
-      <Flurries />,            // 14. light snow showers
-      <Flurries />,            // 15. blowing snow
-      <Flurries />,            // 16. snow
-      <Rainy />,               // 17. hail
-      <Rainy />,               // 18. sleet
-      <Cloudy />,              // 19. dust
-      <Cloudy />,              // 20. foggy
-      <Cloudy />,              // 21. haze
-      <Cloudy />,              // 22. smoky
-      <Cloudy />,              // 23. blustery
-      <Windy />,               // 24. windy
-      <Windy />,               // 25. cold
-      <Cloudy />,              // 26. cloudy
-      <Cloudy />,              // 27. mostly cloudy (night)
-      <Cloudy />,              // 28. mostly cloudy (day)
-      <Cloudy />,              // 29. partly cloudy (night)
-      <Cloudy />,              // 30. partly cloudy (day)
-      <Sunny night={true} />,// 31. clear (night)
-      <Sunny />,               // 32. sunny
-      <Fair night={true} />, // 33. fair (night)
-      <Fair />,                // 34. fair (day)
-      <Rainy />,               // 35. mixed rain and hail
-      <Sunny />,               // 36. hot
-      <ThunderStorm />,        // 37. isolated thunderstorms
-      <ThunderStorm />,        // 38. scattered thunderstorms
-      <ThunderStorm />,        // 39. scattered thunderstorms
-      <Rainy />,               // 40. scattered showers
-      <Flurries />,            // 41. heavy snow
-      <Flurries />,            // 42. scattered snow showers
-      <Flurries />,            // 43. heavy snow
-      <Cloudy />,              // 44. partly cloudy
-      <ThunderStorm />,        // 45. thundershowers
-      <Flurries />,            // 46. snow showers
-      <ThunderStorm />         // 47. isolated thundershowers
-    ];
+
+    const mapping = {
+      201: <ThunderStorm />,
+      202: <ThunderStorm />,
+      203: <ThunderStorm />,
+      210: <ThunderStorm />,
+      211: <ThunderStorm />,
+      212: <ThunderStorm />,
+      221: <ThunderStorm />,
+      230: <ThunderStorm />,
+      231: <ThunderStorm />,
+      232: <ThunderStorm />,
+      301: <Rainy />,
+      302: <Rainy />,
+      310: <Rainy />,
+      311: <Rainy />,
+      312: <Rainy />,
+      313: <Rainy />,
+      314: <Rainy />,
+      321: <Rainy />,
+      500: <Rainy />,
+      501: <Rainy />,
+      502: <Rainy />,
+      503: <Rainy />,
+      504: <Rainy />,
+      511: <Rainy />,
+      520: <Rainy />,
+      521: <Rainy />,
+      522: <Rainy />,
+      531: <Rainy />,
+      600: <Flurries />,
+      601: <Flurries />,
+      602: <Flurries />,
+      611: <Rainy />,
+      612: <Rainy />,
+      615: <Flurries />,
+      616: <Rainy />,
+      620: <Flurries />,
+      621: <Flurries />,
+      622: <Flurries />,
+      701: <Cloudy />,
+      711: <Cloudy />,
+      721: <Cloudy />,
+      731: <Cloudy />,
+      741: <Cloudy />,
+      751: <Cloudy />,
+      761: <Cloudy />,
+      771: <Cloudy />,
+      781: <Cloudy />,
+      800: <Sunny />,
+      1800: <Sunny night={true} />,
+      801: <Cloudy />,
+      1801: <Fair />,
+      1802: <Fair night={true} />,
+      802: <Cloudy />,
+      803: <Cloudy />,
+      804: <Cloudy />,
+      901: <SunShower />,
+      902: <Windy />,
+      903: <Windy />,
+      904: <Windy />,
+      905: <Windy />,
+      906: <Rainy />,
+      951: <SunShower />,
+      952: <Windy />,
+      953: <Windy />,
+      954: <Windy />,
+      955: <Windy />,
+      956: <Rainy />,
+      957: <Rainy />,
+      958: <Rainy />,
+      959: <Rainy />,
+      960: <Rainy />,
+      961: <Rainy />,
+      962: <Rainy />,
+    };
 
     const {
       local,
@@ -179,14 +202,24 @@ class WeatherWidget extends Component {
       forecast
     } = this.props.weather;
 
-    const forecastNextDays = forecast.map((value, index) => {
-      const currentDay = value.day.toUpperCase();
-      if (index > 5) { return null }
+    const days = {
+      0: 'SUN',
+      1: 'MON',
+      2: 'TUE',
+      3: 'WED',
+      4: 'THU',
+      5: 'FRI',
+      6: 'SAT',
+    }
+
+    const forecastNextDays = forecast.slice(0, 5).map((value, index) => {
+      const date = new Date(value.dt * 1000)
+      const currentDay = days[date.getDay()]
       return (
         <li key={index} ref={value}
           className={classNames('weather-day', { 'is-today': index === 0 })}>
           <span className="weather-weekday">{currentDay}</span>
-          {mapping[value.code]}
+          {mapping[value.weather[0].id]}
         </li>
       );
     });
@@ -211,13 +244,13 @@ class WeatherWidget extends Component {
                     <span className="weather-low" ref="lowTemp">{low}</span>
                   </div>
                   <div className="weather-moreDetail">
-                    <span className="weather-windSpeed">&#9873; {humidity} mph</span>
-                    <span className="weather-humidity">&#9748; {windSpeed} g/m3</span>
+                    <span className="weather-windSpeed">&#9873; {windSpeed} mph</span>
+                    <span className="weather-humidity">&#9748; {humidity} g/m3</span>
                   </div>
                 </div>
                 :
                 <div>
-                  <span className="weather-date">{date}</span>
+                  <span className="weather-date">{this.formatDate(new Date(date * 1000))}</span>
                   <span className="weather-type">{type}</span>
                 </div>
               }
@@ -229,6 +262,19 @@ class WeatherWidget extends Component {
                   {this.props.weather.units}
                 </span>
               </span>
+            </div>
+            <div
+              className="weather-wind"
+              style={{
+                color: '#9e9e9e',
+                fontSize: '12px',
+                clear: 'both'
+              }}>
+              {
+                this.props.weather.showWind 
+                  ? `Wind: ${windSpeed} mph`
+                  : '\u00a0'
+              }
             </div>
           </div>
         </div>

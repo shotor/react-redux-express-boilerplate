@@ -8,8 +8,6 @@ require('expose-loader?$!expose-loader?jQuery!jquery')
 // import 'styles/app.less'
 import 'styles/application.sass'
 
-import * as EntityActions from 'actions/entity-actions'
-
 class App extends Component {
 
   static propTypes = {
@@ -33,7 +31,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
-    EntityActions,
+    {},
     dispatch
   )
 }

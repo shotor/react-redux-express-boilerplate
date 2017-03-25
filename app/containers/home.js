@@ -15,7 +15,7 @@ class Home extends Component {
     componentDidMount() {
         const geo = navigator.geolocation
         const position = geo.getCurrentPosition(pos => {
-            console.log(pos)
+            this.props.updatePosition(pos.coords.latitude, pos.coords.longitude)
         })
     }
 
@@ -28,7 +28,10 @@ class Home extends Component {
         return (
             <div className="container">
 
-                <WeatherWidget />
+                <WeatherWidget 
+                    lat={this.props.weather.lat || 0}
+                    lng={this.props.weather.lng || 0}
+                />
 
                 <div className="card">
                     <div style={{

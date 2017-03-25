@@ -83,7 +83,7 @@ class WeatherWidget extends Component {
         <div className="row">
           <div
             className="col-xs-2 col-xs-offset-2" style={{ textAlign: 'center' }}>
-            <img src={`http://openweathermap.org/img/w/${icon}.png`} />
+            <img src={icon ? `http://openweathermap.org/img/w/${icon}.png` : ''} />
           </div>
           <div className="col-xs-8">
             <h4>{this.props.weather.city}</h4>

@@ -18,35 +18,23 @@ class WeatherWidget extends Component {
     lng: PropTypes.number.isRequired
   }
 
-  constructor() {
-    super();
-    this.state = {
-      units: 'F'
-    };   // default
-  }
-
   componentDidMount() {
-
-    let city = this.props.weather.city;
-
-    const localParam = getURLParam(window.location, 'l');
-    if (localParam) {
-      city = localParam;
-    } 
-
-    // pass units of temperature by param
-    
-    //this.setState({ units: unitsParam });
-
-    // interval
-    this.props.fetchData(city);
-    this.timer = setInterval(() => {
-      this.props.fetchData(city);
-    }, 300000);  // 5 min
+    this.initialize();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(foo, bar, taz) {
+    clearInterval(this.timer);
+  }
 
+  initialize() {
+
+    const { lat, lng } = this.props
+    
+    // interval
+    this.props.fetchData(lat, lng);
+    this.timer = setInterval(() => {
+      this.props.fetchData(lat, lng);
+    }, 300000);  // 5 min
   }
 
   componentWillUnmount() {
@@ -71,7 +59,7 @@ class WeatherWidget extends Component {
       speedUnits = 'km/h'
     }
 
-    const localParam = getURLParam(window.location, 'l');
+    const { lat, lng } = this.props.weather
 
     return (
       <div className="card">
@@ -88,9 +76,9 @@ class WeatherWidget extends Component {
           <div className="col-xs-8">
             <h4>{this.props.weather.city}</h4>
             <div>
-              
+
               {deg}°{units}
-              
+
               &nbsp;
 
               {

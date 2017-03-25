@@ -19,12 +19,9 @@ const initialState = {
   low: '--',
   forecast: [],
   units: 'F',
-  city: 'Taiwan Taichung',
   title: 'It\'s a Beautiful Day',
   showWind: true,
   saved: window.localStorage.getItem('saved') ? JSON.parse(window.localStorage.getItem('saved')) : [],
-  lat: 0,
-  lng: 0
 };
 
 export default function weather_reducer(
@@ -39,8 +36,12 @@ export default function weather_reducer(
     case FETCH_SUCCESS:
 
       const {
-        city: { name },
-        list: [{ deg, speed, weather: [{ icon }] }]
+        name,
+        main: {
+          temp,
+        },
+        wind: { speed },
+        weather: [{ icon }]
       } = action.json
 
       return {
@@ -48,14 +49,14 @@ export default function weather_reducer(
         icon,
         city: name,
         windSpeed: speed,
-        degree: deg,
+        degree: temp,
       }
 
     case UPDATE_POSITION:
       return {
         ...state,
-        lat: action.lat,
-        lng: action.lng
+        lat: action.position.lat,
+        lng: action.position.lng
       }
 
     case UPDATE_TITLE:

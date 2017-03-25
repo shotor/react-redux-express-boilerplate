@@ -6,13 +6,9 @@ export const TOGGLE_WIND = 'TOGGLE_WIND'
 export const SAVE_WIDGET = 'SAVE_WIDGET'
 export const DELETE_WIDGET = 'DELETE_WIDGET'
 export const UPDATE_POSITION = 'UPDATE_POSITION'
-const API_URL = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20:city%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
 
 function getUrl(lat, lng) {
-
-
-
-  const url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=london&units=imperial&APPID=b2b6d43f4f0c1243de350da15c4813c9`
+  const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&APPID=0178071df571d264eadf3c545ad00122`
   return url
 }
 
@@ -22,10 +18,10 @@ export function updatePosition(lat, lng) {
   }
 }
 
-export function fetchData(city) {
+export function fetchData(lat, lng) {
   return dispatch => {
     dispatch({ type: FETCH_REQUEST });
-    return fetch(getUrl())
+    return fetch(getUrl(lat, lng))
       .then(res => res.json())
       .then(json => dispatch({
         type: FETCH_SUCCESS,

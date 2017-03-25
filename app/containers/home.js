@@ -21,9 +21,15 @@ class Home extends Component {
 
     render() {
 
-        // access entities
-        // also possible to simplify in mapStateToPropss
-        const { entities: { documents } } = this.props
+        const { lat, lng } = this.props.weather
+
+        if (!lat && !lng) {
+            return (
+                <div>
+                    loading...
+                </div>
+            )
+        }
 
         return (
             <div className="container">
@@ -31,8 +37,8 @@ class Home extends Component {
                 <div className="row">
                     <div className="col-md-4 col-md-offset-4">
                         <WeatherWidget
-                            lat={this.props.weather.lat || 0}
-                            lng={this.props.weather.lng || 0}
+                            lat={lat}
+                            lng={lng}
                         />
                     </div>
                 </div>
@@ -102,7 +108,7 @@ class Home extends Component {
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
+                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
                                 </code>
                             </pre>
 
@@ -143,7 +149,7 @@ class Home extends Component {
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${widget.title}&u=${widget.units}&w=${widget.showWind}></iframe>`}
+                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
                                 </code>
                             </pre>
 

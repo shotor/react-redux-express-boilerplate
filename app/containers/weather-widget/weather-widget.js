@@ -14,26 +14,48 @@ class WeatherWidget extends Component {
   static propTypes = {
     weather: PropTypes.object.isRequired,
     fetchData: PropTypes.func.isRequired,
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired
+    updatePosition: PropTypes.func.isRequired,
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      lat: 0,
+      lng: 0
+    }
   }
 
   componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        this.props.updatePosition(pos.coords.latitude, pos.coords.longitude)
+      },
+      err => {
+        console.log('cannot get position')
+      },
+      { timeout: 1000 }
+    )
+
     this.initialize();
   }
 
-  componentDidUpdate(foo, bar, taz) {
+  componentDidUpdate(props) {
     clearInterval(this.timer);
+    const { lat, lng } = props.weather
+    if (lat !== this.state.lat || lng !== this.state.lng) {
+      this.setState({ lat, lng })
+      this.props.fetchData(lat, lng)
+    }
   }
 
   initialize() {
 
-    const { lat, lng } = this.props
-    
+    const { lat, lng } = this.state
+
     // interval
     this.props.fetchData(lat, lng);
     this.timer = setInterval(() => {
-      this.props.fetchData(lat, lng);
+      this.props.fetchData(this.state.lat, this.state.lng);
     }, 300000);  // 5 min
   }
 
@@ -59,10 +81,10 @@ class WeatherWidget extends Component {
       speedUnits = 'km/h'
     }
 
-    const { lat, lng } = this.props.weather
+    const { lat, lng } = this.state
 
     return (
-      <div className="card">
+      <div className="card weather-widget">
         <div className="row">
           <div className="col-xs-12 weather-title">
             <h4>{this.props.weather.title}</h4>

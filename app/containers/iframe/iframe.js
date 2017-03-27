@@ -12,39 +12,15 @@ class Iframe extends Component {
     weather: PropTypes.object.isRequired
   }
 
-  componentDidMount() {
-    const geo = navigator.geolocation
-    const position = geo.getCurrentPosition(pos => {
-      this.props.updatePosition(pos.coords.latitude, pos.coords.longitude)
-    })
-  }
-
   render() {
 
-    const { lat: _lat, lng: _lng } = this.props.weather
-
-    const latParam = getURLParam(window.location, 'lat');
-    const lngParam = getURLParam(window.location, 'lng');
-
-    const lat = latParam || lat
-    const lng = lngParam || lng
-
-    if (!lat && !lng) {
-      return (
-        <div>
-          loading...
-        </div>
-      )
-    }
-
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" id="iframe-page">
 
         <div className="row">
           <div className="col-xs-12">
             <WeatherWidget
-              lat={parseFloat(lat)}
-              lng={parseFloat(lng)}
+              updatePosition={this.props.updatePosition}
             />
           </div>
         </div>

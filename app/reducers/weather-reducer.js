@@ -15,6 +15,8 @@ const initialState = {
   local: 'Loading',
   day: 'unknow',
   degree: '--',
+  lat:0,
+  lng:0,
   high: '--',
   low: '--',
   forecast: [],
@@ -69,13 +71,13 @@ export default function weather_reducer(
 
       return {
         ...state,
-        units: state.units === 'F' ? 'C' : 'F'
+        units: action.unit
       }
 
     case TOGGLE_WIND:
       return {
         ...state,
-        showWind: !state.showWind
+        showWind: action.show
       }
 
     case SAVE_WIDGET:

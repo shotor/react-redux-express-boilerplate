@@ -36,15 +36,15 @@ export function updateTitle(title) {
   }
 }
 
-export function toggleUnits() {
+export function toggleUnits(unit) {
   return dispatch => {
-    dispatch({ type: TOGGLE_UNITS })
+    dispatch({ type: TOGGLE_UNITS, unit })
   }
 }
 
-export function toggleWind() {
+export function toggleWind(show) {
   return dispatch => {
-    dispatch({ type: TOGGLE_WIND })
+    dispatch({ type: TOGGLE_WIND, show })
   }
 }
 

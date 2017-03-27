@@ -9,42 +9,33 @@ class Home extends Component {
 
     static propTypes = {
         updateTitle: PropTypes.func.isRequired,
-        weather: PropTypes.object.isRequired
+        toggleUnits: PropTypes.func.isRequired,
+        toggleWind: PropTypes.func.isRequired,
+        updatePosition: PropTypes.func.isRequired,
+        weather: PropTypes.object.isRequired,
     }
 
-    componentDidMount() {
-        const geo = navigator.geolocation
-        const position = geo.getCurrentPosition(pos => {
-            this.props.updatePosition(pos.coords.latitude, pos.coords.longitude)
-        })
+    unitsChanged(e) {
+        this.props.toggleUnits(e.currentTarget.value)
+    }
+
+    windChanged(e) {
+        this.props.toggleWind(e.currentTarget.value === 'visible')
     }
 
     render() {
 
-        const { lat, lng } = this.props.weather
+        let lat = this.props.weather.lat
+        let lng = this.props.weather.lng
 
-        if (!lat && !lng) {
-            return (
-                <div>
-                    loading...
-                </div>
-            )
-        }
+        const { units, showWind } = this.props.weather
 
         return (
-            <div className="container">
+            <div className="container" id="home-page">
 
                 <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <WeatherWidget
-                            lat={lat}
-                            lng={lng}
-                        />
-                    </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
+                    <div className="col-md-4">
                         <div className="card">
                             <div style={{
                                 marginBottom: '10px'
@@ -62,53 +53,75 @@ class Home extends Component {
                                     }}
                                 />
                             </div>
-                            <div style={{
-                                width: '50%',
-                                textAlign: 'center',
-                                display: 'inline-block'
-                            }}>
+                            <div>
                                 <label>Units</label><br />
-                                <button
-                                    className="btn"
-                                    onClick={() => this.props.toggleUnits()}
-                                >
-                                    {
-                                        this.props.weather.units === 'F'
-                                            ? 'Imperial'
-                                            : 'Metric'
-                                    }
-                                </button>
+                                <label className="radio-inline">
+                                    <input 
+                                        type="radio" 
+                                        name="units" 
+                                        value="F"
+                                        checked={units === 'F'}
+                                        onChange={this.unitsChanged.bind(this)} 
+                                    />
+                                    Imperial
+                                </label>
+                                <label className="radio-inline">
+                                    <input 
+                                        type="radio" 
+                                        name="units" 
+                                        value="C" 
+                                        checked={units === 'C'}
+                                        onChange={this.unitsChanged.bind(this)} 
+                                    />
+                                    Metric
+                                </label>
                             </div>
-                            <div style={{
-                                width: '50%',
-                                textAlign: 'center',
-                                display: 'inline-block'
-                            }}>
+                            <div>
                                 <label>Show wind</label><br />
-                                <button
-                                    className="btn"
-                                    onClick={() => this.props.toggleWind()}
-                                >
-                                    {
-                                        this.props.weather.showWind
-                                            ? 'Visible'
-                                            : 'Hidden'
-                                    }
-                                </button>
+                                <label className="radio-inline">
+                                    <input 
+                                        type="radio" 
+                                        name="wind" 
+                                        checked={showWind === true}
+                                        value="visible"
+                                        onChange={this.windChanged.bind(this)} 
+                                    />
+                                    Visible
+                                </label>
+                                <label className="radio-inline">
+                                    <input 
+                                        type="radio" 
+                                        name="wind" 
+                                        checked={showWind === false}
+                                        value="hidden"
+                                        onChange={this.windChanged.bind(this)} 
+                                    />
+                                    Hidden
+                                </label>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-md-4 col-md-offset-4">
-                        <div className="card" style={{ textAlign: 'center' }}>
+                    <div className="col-md-4">
+                        <WeatherWidget
+                            updatePosition={this.props.updatePosition}
+                        />
+                    </div>
+
+                    <div className="col-md-4">
+                        <div 
+                            className="card" 
+                            style={{ 
+                                textAlign: 'center',
+                                height: '190px'
+                            }}
+                        >
                             <pre style={{
                                 'whiteSpace': 'pre-wrap',
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
+                                    {`<iframe height="125" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}" frameborder="0"></iframe>`}
                                 </code>
                             </pre>
 
@@ -149,7 +162,7 @@ class Home extends Component {
                                 textAlign: 'left'
                             }}>
                                 <code>
-                                    {`<iframe height="130" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}></iframe>`}
+                                    {`<iframe height="125" width="470" src="http://localhost:3001/iframe/?t=${this.props.weather.title}&lat=${lat}&lng=${lng}&u=${this.props.weather.units}&w=${this.props.weather.showWind}" frameborder="0"></iframe>`}
                                 </code>
                             </pre>
 
